@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helm-valheim.fullname" . }}
+  labels:
+    {{- include "helm-valheim.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port | int }}
+      targetPort: {{ .Values.service.port | int }}
+      nodePort: {{ .Values.service.nodePort | int }}
+      protocol: UDP
+      name: udp1
+    - port: {{ .Values.service.port | int | add 1 }}
+      targetPort: {{ .Values.service.port | int | add 1 }}
+      nodePort: {{ .Values.service.nodePort | int | add 1 }}
+      protocol: UDP
+      name: udp2
+    - port: {{ .Values.service.port | int | add 2 }}
+      targetPort: {{ .Values.service.port | int | add 2 }}
+      nodePort: {{ .Values.service.nodePort | int | add 2 }}
+      protocol: UDP
+      name: udp3
+  selector:
+    {{- include "helm-valheim.selectorLabels" . | nindent 4 }}

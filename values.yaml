@@ -1,0 +1,61 @@
+# Default values for helm-valheim.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: lloesche/valheim-server
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+config:
+  password: "randompassword"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+persistence:
+  enabled: true
+  #existingClaim:
+  annotations: {}
+  accessMode: ReadWriteOnce
+  # storageClass: "-"
+  storageSize: 10Gi
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 2456
+  nodePort: 32000
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 4000m
+    memory: 3000Mi
+  requests:
+    cpu: 2000m
+    memory: 2000Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
