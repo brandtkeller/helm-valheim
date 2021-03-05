@@ -7,9 +7,6 @@ image:
   pullPolicy: IfNotPresent
   tag: "latest"
 
-statefulset:
-  enabled: true
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -52,12 +49,12 @@ resources:
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:
-    cpu: 2000m
-    memory: 4000Mi
-  requests:
-    cpu: 500m
-    memory: 2000Mi
+  # limits:
+  #   cpu: 2000m
+  #   memory: 4000Mi
+  # requests:
+  #   cpu: 500m
+  #   memory: 2000Mi
 
 nodeSelector: {}
 

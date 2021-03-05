@@ -1,4 +1,3 @@
-{{- if and .Values.statefulset.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -58,22 +57,22 @@ spec:
           mountPath: /config
         - name: data
           mountPath: /opt/valheim
-        # readinessProbe:
-        #   exec:
-        #     command:
-        #     - /bin/bash
-        #     - -c
-        #     - "pidof valheim_server.x86_64 || exit 1"
-        #   initialDelaySeconds: 120
-        #   periodSeconds: 60
-        # livenessProbe:
-        #   exec:
-        #     command:
-        #     - /bin/bash
-        #     - -c
-        #     - "pidof valheim_server.x86_64 || exit 1"
-        #   initialDelaySeconds: 210
-        #   periodSeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - "pidof valheim_server.x86_64 || exit 1"
+          initialDelaySeconds: 120
+          periodSeconds: 60
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - "pidof valheim_server.x86_64 || exit 1"
+          initialDelaySeconds: 210
+          periodSeconds: 60
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       {{- with .Values.nodeSelector }}
@@ -149,4 +148,3 @@ spec:
           requests:
             storage: {{ .Values.persistence.size | quote }}
   {{- end }}
-{{- end }}
