@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       {{- include "helm-valheim.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "helm-valheim.fullname" . | quote }}
+  serviceName: "{{ include "helm-valheim.fullname" . }}-service"
   replicas: 1
   template:
     metadata:
@@ -33,15 +33,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 10 }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        env:
-        - name: SERVER_PORT
-          value: {{ .Values.service.port | quote }}
-        - name: SERVER_NAME
-          value: "Keller Valheim"
-        - name: WORLD_NAME
-          value: "Dedicated"
-        - name: SERVER_PASS
-          value: {{ .Values.config.password | quote }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "helm-valheim.fullname" . }}-configs
+        - secretRef:
+            name: {{ include "helm-valheim.fullname" . }}-secrets
         ports:
         - containerPort: {{ .Values.service.port | int }}
           name: udp1
