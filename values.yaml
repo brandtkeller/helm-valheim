@@ -7,6 +7,9 @@ image:
   pullPolicy: IfNotPresent
   tag: "latest"
 
+statefulset:
+  enabled: true
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -26,10 +29,12 @@ serviceAccount:
 persistence:
   enabled: true
   #existingClaim:
+  labels: {}
   annotations: {}
-  accessMode: ReadWriteOnce
+  accessModes: 
+    - ReadWriteOnce
   # storageClass: "-"
-  storageSize: 10Gi
+  size: 10Gi
 
 podAnnotations: {}
 
@@ -40,19 +45,19 @@ securityContext: {}
 service:
   type: NodePort
   port: 2456
-  nodePort: 31000
+  nodePort: 32000
 
-resources: {}
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 1000m
-  #   memory: 3000Mi
-  # requests:
-  #   cpu: 500m
-  #   memory: 2000Mi
+  limits:
+    cpu: 2000m
+    memory: 4000Mi
+  requests:
+    cpu: 500m
+    memory: 2000Mi
 
 nodeSelector: {}
 
