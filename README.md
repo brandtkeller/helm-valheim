@@ -30,8 +30,8 @@ adminlist.txt  backups  bannedlist.txt  permittedlist.txt  prefs  worlds
 
 ## TODO
 - Revise NOTES.TXT
-- Establish a readiness/liveness probe
 - Enable use of all environment variables the image exposes
+    - Create a configmap to house all of these options
 - Fix password secret bug
 - Determine applicable PV sizes
 
