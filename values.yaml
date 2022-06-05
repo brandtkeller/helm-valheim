@@ -3,7 +3,9 @@
 image:
   repository: lloesche/valheim-server
   pullPolicy: IfNotPresent
-  tag: "latest"
+  # The image builder only tags w/ 'latest'
+  # This may be due to the non-determinism of updating the application internal to the container
+  tag: "latest" 
 
 imagePullSecrets: []
 nameOverride: ""
@@ -11,24 +13,48 @@ fullnameOverride: ""
 
 secrets:
   SERVER_PASS: "somerandompassword"
+  SUPERVISOR_HTTP_PASS: ""
 
 config:
   SERVER_NAME: "My Server"
-  WORLD_NAME: "Dedicated"
   SERVER_PORT: "2456"
+  WORLD_NAME: "Dedicated"
   SERVER_PUBLIC: "true"
   SERVER_ARGS: ""
+  ADMINLIST_IDS: ""
+  BANNEDLIST_IDS: ""
+  PERMITTEDLIST_IDS: ""
   UPDATE_CRON: "*/15 * * * *"
+  IDLE_DATAGRAM_WINDOW: "3"
+  IDLE_DATAGRAM_MAX_COUNT: "30"
   UPDATE_IF_IDLE: "true"
   RESTART_CRON: "0 3 * * *"
+  RESTART_IF_IDLE: "true"
   TZ: "America/Los_Angeles"
   BACKUPS: "true"
   BACKUPS_CRON: "0 */2 * * *"
   BACKUPS_DIRECTORY: "/config/backups"
   BACKUPS_MAX_AGE: "3"
+  BACKUPS_MAX_COUNT: "0"
+  BACKUPS_IF_IDLE: "true"
+  BACKUPS_IDLE_GRACE_PERIOD: "3600"
+  BACKUPS_ZIP: "true"
   PERMISSIONS_UMASK: "022"
   STEAMCMD_ARGS: "validate"
   VALHEIM_PLUS: "false"
+  BEPINEX: "false"
+  SUPERVISOR_HTTP:	false	
+  SUPERVISOR_HTTP_PORT:	9001	
+  SUPERVISOR_HTTP_USER:	admin	
+  STATUS_HTTP	false: ""
+  STATUS_HTTP_PORT:	80	
+  STATUS_HTTP_CONF:	/config/httpd.conf	
+  STATUS_HTTP_HTDOCS:	/opt/valheim/htdocs	
+  SYSLOG_REMOTE_HOST:	""
+  SYSLOG_REMOTE_PORT:	514	
+  SYSLOG_REMOTE_AND_LOCAL:	true	
+  PUID:	0	
+  PGID:	0	
 
 serviceAccount:
   # Specifies whether a service account should be created
