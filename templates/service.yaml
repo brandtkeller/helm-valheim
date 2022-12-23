@@ -9,17 +9,23 @@ spec:
   ports:
     - port: {{ .Values.service.port | int }}
       targetPort: {{ .Values.service.port | int }}
+      {{- if eq .Values.service.type "NodePort" }}
       nodePort: {{ .Values.service.nodePort | int }}
+      {{- end }}
       protocol: UDP
       name: udp1
     - port: {{ .Values.service.port | int | add 1 }}
       targetPort: {{ .Values.service.port | int | add 1 }}
+      {{- if eq .Values.service.type "NodePort" }}
       nodePort: {{ .Values.service.nodePort | int | add 1 }}
+      {{- end }}
       protocol: UDP
       name: udp2
     - port: {{ .Values.service.port | int | add 2 }}
       targetPort: {{ .Values.service.port | int | add 2 }}
+      {{- if eq .Values.service.type "NodePort" }}
       nodePort: {{ .Values.service.nodePort | int | add 2 }}
+      {{- end }}
       protocol: UDP
       name: udp3
   selector:
